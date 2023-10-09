@@ -61,7 +61,7 @@ function addRoll() {
 addRollModalElement.addEventListener('show.bs.modal', e => {
     //If the event has a related target, that means that the edit button called the modal. 
     if (e.relatedTarget != null) {
-        $("#addRollModalTitle").text('Edit Roll');
+        $("#roll-tab").text('Edit Roll');
         $("#btnSubmitRoll").text('Edit Roll');
         const itemID = e.relatedTarget.closest('div.accordion-item').data("target");
         $("#rollID").val(itemID);
@@ -97,7 +97,7 @@ addRollModalElement.addEventListener('show.bs.modal', e => {
     }
     //If no related target, that means it's a new roll, so set the text
     else {
-        $("#addRollModalTitle").val('Add Roll');
+        $("#roll-tab").val('Add Roll');
         $("#btnSubmitRoll").val('Add Roll');
     }
     //Trigger the onchange to reset displayed fields
@@ -136,7 +136,7 @@ $("#btnSubmitRoll").click(function() {
     let rollIndex = -1
     if (itemID != '') {
         rollIndex = rollList.findIndex(obj => {
-            return obj.id = itemID
+            return obj.id === itemID
         })
     }
     const isEdit = rollIndex > -1 

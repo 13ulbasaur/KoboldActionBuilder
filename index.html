@@ -119,101 +119,123 @@
             </div>
         </div>
     </div>
+    
     <!-- Add Roll Modal -->
-    <div class="modal fade"  data-bs-backdrop="static"  data-bs-keyboard="false" id="addRollModal" tabindex="-1" aria-labelledby="addRollModalTitle" aria-hidden="true">
+    <div class="modal fade"  data-bs-backdrop="static"  data-bs-keyboard="false" id="addRollModal" tabindex="-1" aria-labelledby="roll-tab" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header">
-            <h1 class="modal-title fs-5" id="addRollModalTitle">Add Roll</h1>
+            <div class="modal-header" style="padding-bottom:0px; border-bottom: 0px;">
+            <h1 class="modal-title fs-5" >
+                <ul class="nav nav-tabs" id="rollModalTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="roll-tab" data-bs-toggle="tab" data-bs-target="#roll-tab-pane" type="button" role="tab" aria-controls="roll-tab-pane" aria-selected="true">Add Roll</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference-tab-pane" type="button" role="tab" aria-controls="reference-tab-pane" aria-selected="false">Reference</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="examples-tab" data-bs-toggle="tab" data-bs-target="#examples-tab-pane" type="button" role="tab" aria-controls="examples-tab-pane" aria-selected="false">Examples</button>
+                    </li>
+                  </ul></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="rollForm">
-                    <input style="display: none;" type="text" id="rollID">
-                    <div class="form-floating mb-3">
-                        <input type="text" id="rollTypeName" class="form-control" required>
-                        <label for="rollTypeName" class="form-label"><span class="itemName">Name</span></label>
-                        <div class="form-text text-danger-emphasis" style="display:none;" id="duplicateNameWarning">Roll already exists with that name. Please enter another name.</div>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <select class="form-select" id="actionType" aria-label="Action Type">
-                            <option value="attack" selected>Attack</option>
-                            <option value="skill-challenge">Skill Challenge</option>
-                            <option value="damage">Damage</option>
-                            <option value="advanced-damage">Advanced Damage</option>
-                            <option value="save">Save</option>
-                            <option value="text">Text</option>
-                        </select>
-                        <label for="actionType" class="form-label"><span class="itemName">Type</span> <span class="form-text">The action type.</span></label>
-                    </div>
-                    <!-- Different fields for rolls that will hide or show depending on type selected... -->
-                    <div class="form-floating mb-3 rollSections attack-skill-section damage-section" required>
-                        <input type="text" id="roll" class="form-control" required>
-                        <label for="roll" class="form-label"><span class="itemName">Roll</span> <span class="form-text">The dice rolled for the action or for damage on a regular success.</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections attack-skill-section">
-                        <input type="text" id="targetDC" class="form-control">
-                        <label for="targetDC" class="form-label"><span class="itemName">Target DC</span> <span class="form-text">Whether the attack roll checks against AC, a Save DC, or a Skill DC.</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections advanced-damage-section">
-                        <input type="text" id="criticalSuccessRoll" class="form-control">
-                        <label for="criticalSuccessRoll" class="form-label"><span class="itemName">Critical Success Roll</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections advanced-damage-section">
-                        <input type="text" id="criticalFailureRoll" class="form-control">
-                        <label for="criticalFailureRoll" class="form-label"><span class="itemName">Critical Failure Roll</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections advanced-damage-section">
-                        <input type="text" id="successRoll" class="form-control">
-                        <label for="successRoll" class="form-label"><span class="itemName">Success Roll</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections advanced-damage-section">
-                        <input type="text" id="failureRoll" class="form-control">
-                        <label for="failureRoll" class="form-label"><span class="itemName">Failure Roll</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections save-section">
-                        <input type="text" id="saveRollType" class="form-control" required>
-                        <label for="saveRollType" class="form-label"><span class="itemName">Save Roll Type</span> <span class="form-text">What the target rolls against your DC.</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections save-section">
-                        <input type="text" id="saveTargetDC" class="form-control" required>
-                        <label for="saveTargetDC" class="form-label"><span class="itemName">Save Target DC</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections text-section">
-                        <textarea id="defaultText" class="form-control"   style="height: 100px"></textarea>
-                        <label for="defaultText" class="form-label"><span class="itemName">Default Text</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections text-section">
-                        <textarea id="criticalSuccessText" class="form-control"   style="height: 100px"></textarea>
-                        <label for="criticalSuccessText" class="form-label"><span class="itemName">Critical Success Text</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections text-section">
-                        <textarea id="criticalFailureText" class="form-control"   style="height: 100px"></textarea>
-                        <label for="criticalFailureText" class="form-label"><span class="itemName">Critical Failure Text</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections text-section">
-                        <textarea id="successText" class="form-control"   style="height: 100px"></textarea>
-                        <label for="successText" class="form-label"><span class="itemName">Success Text</span></label>
-                    </div>
-                    <div class="form-floating mb-3 rollSections text-section">
-                        <textarea id="failureText" class="form-control"   style="height: 100px"></textarea>
-                        <label for="failureText" class="form-label"><span class="itemName">Failure Text</span></label>
-                    </div>
-                    <div class="form-check-prepend rollSections damage-section advanced-damage-section">
-                        <label class="form-check-label" for="healInsteadOfDamage"><span class="itemName">Heal Instead of Damage</span></label>
-                        <input class="form-check-input" type="checkbox" value="" id="healInsteadOfDamage">
-                    </div>  
-                    <div class="form-check-prepend rollSections attack-skill-section damage-section advanced-damage-section save-section text-section">
-                        <label class="form-check-label " for="allowRollModifiers"><span class="itemName">Allow Roll Modifiers</span></label>
-                        <input class="form-check-input" type="checkbox" value="" id="allowRollModifiers" checked>
-                        <span class="form-text">Whether to allow modifiers to alter the roll. Ex. set to false for bonus damage</span>
-                    </div>  
-                    <div class="form-floating mb-3 rollSections text-section">
-                        <input type="text" id="extraTags" class="form-control">
-                        <label for="extraTags" class="form-label"><span class="itemName">Extra Tags</span></label> <span class="form-text"> (separate tags with commas)</span>
-                    </div>
-                </form>
-            </div>
+                <div class="tab-content" id="rollModalTabsContent">
+                    <div class="tab-pane fade show active" id="roll-tab-pane" role="tabpanel" aria-labelledby="roll-tab" tabindex="0">
+                        <form id="rollForm">
+                            <input style="display: none;" type="text" id="rollID">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="rollTypeName" class="form-control" required>
+                                <label for="rollTypeName" class="form-label"><span class="itemName">Name</span></label>
+                                <div class="form-text text-danger-emphasis" style="display:none;" id="duplicateNameWarning">Roll already exists with that name. Please enter another name.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" id="actionType" aria-label="Action Type">
+                                    <option value="attack" selected>Attack</option>
+                                    <option value="skill-challenge">Skill Challenge</option>
+                                    <option value="damage">Damage</option>
+                                    <option value="advanced-damage">Advanced Damage</option>
+                                    <option value="save">Save</option>
+                                    <option value="text">Text</option>
+                                </select>
+                                <label for="actionType" class="form-label"><span class="itemName">Type</span> <span class="form-text">The action type.</span></label>
+                            </div>
+                            <!-- Different fields for rolls that will hide or show depending on type selected... -->
+                            <div class="form-floating mb-3 rollSections attack-skill-section damage-section" required>
+                                <input type="text" id="roll" class="form-control" required>
+                                <label for="roll" class="form-label"><span class="itemName">Roll</span> <span class="form-text">The dice rolled for the action or for damage on a regular success.</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections attack-skill-section">
+                                <input type="text" id="targetDC" class="form-control">
+                                <label for="targetDC" class="form-label"><span class="itemName">Target DC</span> <span class="form-text">Whether the attack roll checks against AC, a Save DC, or a Skill DC.</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections advanced-damage-section">
+                                <input type="text" id="criticalSuccessRoll" class="form-control">
+                                <label for="criticalSuccessRoll" class="form-label"><span class="itemName">Critical Success Roll</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections advanced-damage-section">
+                                <input type="text" id="criticalFailureRoll" class="form-control">
+                                <label for="criticalFailureRoll" class="form-label"><span class="itemName">Critical Failure Roll</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections advanced-damage-section">
+                                <input type="text" id="successRoll" class="form-control">
+                                <label for="successRoll" class="form-label"><span class="itemName">Success Roll</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections advanced-damage-section">
+                                <input type="text" id="failureRoll" class="form-control">
+                                <label for="failureRoll" class="form-label"><span class="itemName">Failure Roll</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections save-section">
+                                <input type="text" id="saveRollType" class="form-control" required>
+                                <label for="saveRollType" class="form-label"><span class="itemName">Save Roll Type</span> <span class="form-text">What the target rolls against your DC.</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections save-section">
+                                <input type="text" id="saveTargetDC" class="form-control" required>
+                                <label for="saveTargetDC" class="form-label"><span class="itemName">Save Target DC</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections text-section">
+                                <textarea id="defaultText" class="form-control"   style="height: 100px"></textarea>
+                                <label for="defaultText" class="form-label"><span class="itemName">Default Text</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections text-section">
+                                <textarea id="criticalSuccessText" class="form-control"   style="height: 100px"></textarea>
+                                <label for="criticalSuccessText" class="form-label"><span class="itemName">Critical Success Text</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections text-section">
+                                <textarea id="criticalFailureText" class="form-control"   style="height: 100px"></textarea>
+                                <label for="criticalFailureText" class="form-label"><span class="itemName">Critical Failure Text</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections text-section">
+                                <textarea id="successText" class="form-control"   style="height: 100px"></textarea>
+                                <label for="successText" class="form-label"><span class="itemName">Success Text</span></label>
+                            </div>
+                            <div class="form-floating mb-3 rollSections text-section">
+                                <textarea id="failureText" class="form-control"   style="height: 100px"></textarea>
+                                <label for="failureText" class="form-label"><span class="itemName">Failure Text</span></label>
+                            </div>
+                            <div class="form-check-prepend rollSections damage-section advanced-damage-section">
+                                <label class="form-check-label" for="healInsteadOfDamage"><span class="itemName">Heal Instead of Damage</span></label>
+                                <input class="form-check-input" type="checkbox" value="" id="healInsteadOfDamage">
+                            </div>  
+                            <div class="form-check-prepend rollSections attack-skill-section damage-section advanced-damage-section save-section text-section">
+                                <label class="form-check-label " for="allowRollModifiers"><span class="itemName">Allow Roll Modifiers</span></label>
+                                <input class="form-check-input" type="checkbox" value="" id="allowRollModifiers" checked>
+                                <span class="form-text">Whether to allow modifiers to alter the roll. Ex. set to false for bonus damage</span>
+                            </div>  
+                            <div class="form-floating mb-3 rollSections text-section">
+                                <input type="text" id="extraTags" class="form-control">
+                                <label for="extraTags" class="form-label"><span class="itemName">Extra Tags</span></label> <span class="form-text"> (separate tags with commas)</span>
+                            </div>
+                        </form>
+                    </div> <!--//end roll-tab div -->
+                    <div class="tab-pane fade" id="reference-tab-pane" role="tabpanel" aria-labelledby="reference-tab" tabindex="0">
+
+                    </div> <!--//end reference-tab div -->
+                    <div class="tab-pane fade" id="examples-tab-pane" role="tabpanel" aria-labelledby="examples-tab" tabindex="0">
+
+                    </div> <!--//end examples-tab div -->
+                </div> <!--//end tab-content div -->
+            </div> <!--//end modal-body  div -->
             <div class="modal-footer">
             <button type="button" id="btnSubmitRoll" class="btn btn-primary">Add Roll</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
