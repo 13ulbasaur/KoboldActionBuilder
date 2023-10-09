@@ -175,6 +175,9 @@ $("#btnSubmitRoll").click(function() {
                 });
                 itemHTML += '<br><b>Extra Tags: </b>' + $(this).val();
             }
+            else {
+                rollObject.extraTags = [];
+            }
         }
         //Or if it is a checkbox, we get false/true
         else if ($(this).attr('type') === 'checkbox') {
