@@ -257,3 +257,14 @@ $('#rollsList').on('click', '.deleteRoll', function() {
     }
     buildJson();
 }); 
+
+//Hide the submit button in the roll modal if not on the roll tab 
+$('button[data-bs-toggle="tab"]').on("click",function(){
+    console.log(this.id);
+    if (this.id === 'roll-tab') {
+        $('#btnSubmitRoll').show()
+    }
+    else {
+        $('#btnSubmitRoll').hide()
+    }
+ });
