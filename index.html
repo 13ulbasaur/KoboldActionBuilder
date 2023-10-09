@@ -55,6 +55,12 @@
         text-align: center;
         margin-left: 5px;
     }
+  .accordion-button:not(.collapsed) {
+    background-color: #52525e ;
+        color: #fbfbf8 ;
+        border-color: #b1b1b9 ;
+}
+
 </style>
 <body>
     <div class="container" style="border: 1px solid #495057; border-radius:0.375rem; margin-top: 15px;">
@@ -229,7 +235,57 @@
                         </form>
                     </div> <!--//end roll-tab div -->
                     <div class="tab-pane" id="reference-tab-pane" role="tabpanel" aria-labelledby="reference-tab" tabindex="0">
-                        References here...
+                      <div class="accordion" id="accordionReferences">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRollTags" aria-expanded="true" aria-controls="collapseOne">
+        Character Attributes and Roll Tags
+      </button>
+    </h2>
+    <div id="collapseRollTags" class="accordion-collapse collapse show" data-bs-parent="#accordionReferences">
+      <div class="accordion-body">
+        Character attributes are numeric values about your character that are usable in any roll. You can add attributes to any roll by simply including the attribute name wrapped in square brackets [ ]. For example, a d20 roll that you're trained in using strength can be rolled with <code>d20 + [trained] + [strength]</code>. Certain attributes also add tags to your rolls, allowing modifiers to effect them. For example a roll with <code>[athletics]</code> would apply the "athletics" tag and the "skill" tag. <br />
+<br />
+Below are all available attributes:
+
+        <div class="card col-sm-6">
+  <div class="card-header">
+    character
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Accordion Item #2
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+                      </div> 
                     </div> <!--//end reference-tab div -->
                     <div class="tab-pane" id="examples-tab-pane" role="tabpanel" aria-labelledby="examples-tab" tabindex="0">
                         Examples here...
