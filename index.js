@@ -18,28 +18,21 @@ function buildJson() {
     jsonObject.type = $('#type').val();
     jsonObject.actionCost = $('#actionCost').val();
     jsonObject.autoHeighten = $('#autoHeighten').is(":checked");
-    //only build other things if not empty
-    const description = $('#description').val();
-    if (description != '') {
-        jsonObject.description = description;
-    }
+    
+    jsonObject.description = $('#description').val();
     const baseLevel = $('#baseLevel').val();
     if (baseLevel != '') {
         jsonObject.baseLevel = parseInt(baseLevel);
     }
     const tags = $('#tags').val();
-    if (tags != '') {
-        //Split string into array by commas
-        jsonObject.tags = tags.split(',').map(function(item) {
-            return item.trim();
-        });
-    }
-    if (rollList.length > 0) {
-        jsonObject.rolls = rollList.map(({id, ...rest}) => {
-            return rest;
-        });
-    }
-    console.log(jsonObject);
+    //Split string into array by commas
+    jsonObject.tags = tags.split(',').map(function(item) {
+        return item.trim();
+    });
+
+    jsonObject.rolls = rollList.map(({id, ...rest}) => {
+        return rest;
+    });
     $('#result').val(JSON.stringify([jsonObject]));
 }
 
