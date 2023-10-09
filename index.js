@@ -9,7 +9,6 @@ const addRollModal = new bootstrap.Modal('#addRollModal', {
 const addRollModalElement = document.getElementById('addRollModal')
 
 $('#actionForm').on('change','input, select, textarea', function() {
-    console.log('Change: ' + this.name);
     buildJson();
 })
 
@@ -26,7 +25,7 @@ function buildJson() {
     }
     const baseLevel = $('#baseLevel').val();
     if (baseLevel != '') {
-        jsonObject.baseLevel = baseLevel;
+        jsonObject.baseLevel = parseInt(baseLevel);
     }
     const tags = $('#tags').val();
     if (tags != '') {
@@ -36,10 +35,12 @@ function buildJson() {
         });
     }
     if (rollList.length > 0) {
-        jsonObject.rolls = rollList;
+        jsonObject.rolls = rollList.map(({id, ...rest}) => {
+            return rest;
+        });
     }
     console.log(jsonObject);
-    $('#result').val(JSON.stringify(jsonObject));
+    $('#result').val(JSON.stringify([jsonObject]));
 }
 
 //When actiontype is changed, show the respective section and hide the others.
@@ -64,14 +65,62 @@ function addRoll() {
 }
 
 //Wjen the roll modal opens...
-addRollModalElement.addEventListener('show.bs.modal', event => {
+addRollModalElement.addEventListener('show.bs.modal', e => {
+    //If the event has a related target, that means that the edit button called the modal. 
+    if (e.relatedTarget != null) {
+        $("#addRollModalTitle").text('Edit Roll');
+        $("#btnSubmitRoll").text('Edit Roll');
+        const itemID = e.relatedTarget.closest('div.accordion-item').data("target");
+        $("#rollID").val(itemID);
+
+        //Get the list object
+        const rollItem = rollList.find(item => item.id === itemID);
+        //Populate modal fields
+        for (const property in rollItem) {
+            //name field has a different name
+            if (property === 'name') {
+                $('#rollTypeName').val(rollItem[property])
+            }
+            //as does type field
+            else if (property === 'type') {
+                $('#actionType').val(rollItem[property])
+            }
+            //tags needs to be parsed back as a string
+            else if (property === 'extraTags') {
+                $('#extraTags').val(rollItem[property].join(', '));
+            }
+            else {
+                let input = $('#' + property)
+                //In the input is a checkbox, do different stuff.
+                if (input.attr('type') === 'checkbox') {
+                    input.prop('checked',rollItem[property]);
+                }
+                //Otherwise just chuck in the value.
+                else {
+                    input.val(rollItem[property]);
+                }
+            }
+        }
+    }
+    //If no related target, that means it's a new roll, so set the text
+    else {
+        $("#addRollModalTitle").val('Add Roll');
+        $("#btnSubmitRoll").val('Add Roll');
+    }
     //Trigger the onchange to reset displayed fields
     $('#actionType').change();
 })
 
+
+//Wjen the roll modal is fully opened...
+addRollModalElement.addEventListener('shown.bs.modal', event => {
+    //Set the name field as focus
+    $('#rollTypeName').focus()
+})
+
+
 //When the roll modal is fully closed...
 addRollModalElement.addEventListener('hidden.bs.modal', e => {
-    console.log(e);
     //Reset the form
     document.getElementById("rollForm").reset(); 
 })
@@ -86,7 +135,32 @@ $("#btnSubmitRoll").click(function() {
     let rollObject = {};
     let itemHTML = '';
     //Get the name
-    rollObject.name = $('#rollTypeName').val();
+    rollObject.name = $('#rollTypeName').val().trim();
+
+    //Check if this is an edit or an add. If the index is -1, then it's an add. 
+    const itemID = $('#rollID').val();
+    console.log(itemID);
+    let rollIndex = -1
+    if (itemID != '') {
+        rollIndex = rollList.findIndex(obj => {
+            return obj.id = itemID
+        })
+    }
+    const isEdit = rollIndex > -1 
+
+    console.log(`Is Edit: ${isEdit}`);
+
+    //Check if the name already exists, and reject input if so. 
+    const nameExists = rollList.some(obj => {
+        return (obj.name.toLowerCase() === rollObject.name.toLowerCase() && obj.id != itemID)
+    })
+    if (nameExists === true) {
+        $('#duplicateNameWarning').show();
+        return false;
+    }
+    else {
+        $('#duplicateNameWarning').hide();
+    }
     //Get which type was selected.
     const type = $('#actionType').val()
     rollObject.type = type;
@@ -112,21 +186,33 @@ $("#btnSubmitRoll").click(function() {
         //Or if it is a checkbox, we get false/true
         else if ($(this).attr('type') === 'checkbox') {
             rollObject[$(this).attr('id')] = $(this).is(":checked");
-            itemHTML += '<br><b>' + $(this).siblings('label:first').text() + ': </b>' + $(this).is(":checked");
+            itemHTML += '<br><b>' + $(this).siblings('label:first').find('span.itemName').text() + ': </b>' + $(this).is(":checked");
         }
         else 
         {
             if ($(this).val() != '') {
                 rollObject[$(this).attr('id')] = $(this).val();
-                itemHTML += '<br><b>' + $(this).siblings('label:first').text() + ': </b>' + $(this).val();
+                itemHTML += '<br><b>' + $(this).siblings('label:first').find('span.itemName').text() + ': </b>' + $(this).val();
             }
         }
     });
 
-    console.log(rollObject);
+    //If it is edit..
+    if (isEdit === true) {
+        //Replace that object with the new one.
+        rollObject.id = itemID;
+        rollList[rollIndex] = rollObject;
+        //Find the accordion item with that id and then edit the body of that. 
+        $('#' + itemID + '>.accordion-body').html(itemHTML)
 
-    //Add the object to the rolls List
-    addRollToList(rollObject, itemHTML);
+        //And edit the header...
+        $('[data-bs-target="#' + itemID + '"]').text(rollObject.name);
+    }
+    //If it is add...
+    else {
+        //Add the object to the rolls List
+        addRollToList(rollObject, itemHTML);
+    }
     buildJson();
     //Close the form
     addRollModal.hide();
@@ -138,12 +224,15 @@ function addRollToList(rollObject,itemHTML) {
     nextRow++;
     rollObject.id = itemID;
     rollList.push(rollObject);
-    console.log(rollList);
     
     //Loop through each attribute in the object 
-    $('#rollsList').append('<div class="accordion-item">' +
+    $('#rollsList').append('<div class="accordion-item" data-target="' + itemID + '">' +
     '<h2 class="accordion-header">' +
         '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#' + itemID + '" aria-expanded="false" aria-controls="' + itemID + '">' + rollObject.name + '</button>' +
+        '<div class="accordionButtons">' +
+            '<button class="btn btn-outline-light editRoll" type="button" title="Edit Roll"><i class="bi bi-pencil-square"></i></button>' +
+            '<button class="btn btn-outline-danger deleteRoll" type="button" title="Delete Roll"><i class="bi bi-trash"></i></button>' +
+        '</div>' +
     '</h2>' +
     '<div id="' + itemID + '" class="accordion-collapse collapse " data-bs-parent="#rollsList">' +
         '<div class="accordion-body">' +
@@ -152,4 +241,23 @@ function addRollToList(rollObject,itemHTML) {
     '</div>' +
     '</div>')
 }
-//Do stuff
+
+$('#rollsList').on('click', '.editRoll', function() {
+    //Pass in the edit button that was clicked so that the modal can reference it.
+    addRollModal.show($(this));
+});
+
+$('#rollsList').on('click', '.deleteRoll', function() {
+    //TO DO: ADD CONFIRMATION
+    const item = $(this).closest('div.accordion-item')
+    if (window.confirm("Are you sure you want to delete the roll " + item.find('.accordion-button').text() + "?")) {
+        //Get the ID of this item and delete it from the roll List. 
+        //Find item in roll list and delete
+        const itemID = item.data("target");
+        rollList = rollList.filter(item => item.id !== itemID);
+
+        //Delete the item from accordion
+        item.remove();
+    }
+    buildJson();
+}); 
