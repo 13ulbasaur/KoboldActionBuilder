@@ -236,31 +236,69 @@
                     </div> <!--//end roll-tab div -->
                     <div class="tab-pane" id="reference-tab-pane" role="tabpanel" aria-labelledby="reference-tab" tabindex="0">
                       <div class="accordion" id="accordionReferences">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRollTags" aria-expanded="true" aria-controls="collapseOne">
-        Character Attributes and Roll Tags
-      </button>
-    </h2>
-    <div id="collapseRollTags" class="accordion-collapse collapse show" data-bs-parent="#accordionReferences">
-      <div class="accordion-body">
-        Character attributes are numeric values about your character that are usable in any roll. You can add attributes to any roll by simply including the attribute name wrapped in square brackets [ ]. For example, a d20 roll that you're trained in using strength can be rolled with <code>d20 + [trained] + [strength]</code>. Certain attributes also add tags to your rolls, allowing modifiers to effect them. For example a roll with <code>[athletics]</code> would apply the "athletics" tag and the "skill" tag. <br />
-<br />
-Below are all available attributes:
-
-        <div class="card col-sm-6">
-  <div class="card-header">
-    character
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRollTags" aria-expanded="true" aria-controls="collapseOne">
+                                Character Attributes and Roll Tags
+                            </button>
+                            </h2>
+                            <div id="collapseRollTags" class="accordion-collapse collapse show" data-bs-parent="#accordionReferences">
+                                <div class="accordion-body">
+                                    Character attributes are numeric values about your character that are usable in any roll. You can add attributes to any roll by simply including the attribute name wrapped in square brackets [ ]. For example, a d20 roll that you're trained in using strength can be rolled with <code>d20 + [trained] + [strength]</code>. Certain attributes also add tags to your rolls, allowing modifiers to effect them. For example a roll with <code>[athletics]</code> would apply the "athletics" tag and the "skill" tag. <br />
+                                    <br />
+                                    Below are all available attributes:
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    character
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">level</li>
+                                                    <li class="list-group-item">maxHp</li>
+                                                    <li class="list-group-item">tempHp</li>
+                                                    <li class="list-group-item">ac</li>
+                                                    <li class="list-group-item">heroPoints</li>
+                                                    <li class="list-group-item">speed</li>
+                                                    <li class="list-group-item">classDc</li>
+                                                    <li class="list-group-item">perception</li>
+                                                    <li class="list-group-item">maxStamina</li>
+                                                    <li class="list-group-item">stamina</li>
+                                                    <li class="list-group-item">maxResolve</li>
+                                                    <li class="list-group-item">resolve</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    attacks
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">arcaneAttack</li>
+                                                    <li class="list-group-item">divineAttack</li>
+                                                    <li class="list-group-item">occultAttack</li>
+                                                    <li class="list-group-item">primalAttack</li>
+                                                    <li class="list-group-item">simpleAttack</li>
+                                                    <li class="list-group-item">martialAttack</li>
+                                                    <li class="list-group-item">advancedAttack</li>
+                                                    <li class="list-group-item">unarmedAttack</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    ability
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
   <div class="accordion-item">
     <h2 class="accordion-header">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
