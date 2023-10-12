@@ -247,8 +247,34 @@
                                     Character attributes are numeric values about your character that are usable in any roll. You can add attributes to any roll by simply including the attribute name wrapped in square brackets [ ]. For example, a d20 roll that you're trained in using strength can be rolled with <code>d20 + [trained] + [strength]</code>. Certain attributes also add tags to your rolls, allowing modifiers to effect them. For example a roll with <code>[athletics]</code> would apply the "athletics" tag and the "skill" tag. <br />
                                     <br />
                                     Below are all available attributes:
-                                    <div class="row">
-                                        <div class="col-sm-6">
+                                    <div class="row" id="attributesTables" data-masonry='{"percentPosition": true }'>
+                                        <div class="col-sm-6 py-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    skill
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">Acrobatics</li>
+                                                    <li class="list-group-item">Arcana</li>
+                                                    <li class="list-group-item">Athletics</li>
+                                                    <li class="list-group-item">Crafting</li>
+                                                    <li class="list-group-item">Deception</li>
+                                                    <li class="list-group-item">Diplomacy</li>
+                                                    <li class="list-group-item">Intimidation</li>
+                                                    <li class="list-group-item">Medicine</li>
+                                                    <li class="list-group-item">Nature</li>
+                                                    <li class="list-group-item">Occultism</li>
+                                                    <li class="list-group-item">Performance</li>
+                                                    <li class="list-group-item">Religion</li>
+                                                    <li class="list-group-item">Society</li>
+                                                    <li class="list-group-item">Stealth</li>
+                                                    <li class="list-group-item">Survival</li>
+                                                    <li class="list-group-item">Thievery</li>
+                                                    <li class="list-group-item">(Any custom skills such as lores as well. E.G. 'Warfare_Lore'. Spaces are replaced with _'s)</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 py-3">
                                             <div class="card">
                                                 <div class="card-header">
                                                     character
@@ -269,7 +295,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6 py-3">
                                             <div class="card">
                                                 <div class="card-header">
                                                     attacks
@@ -286,12 +312,43 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-6 py-3">
                                             <div class="card">
                                                 <div class="card-header">
                                                     ability
                                                 </div>
                                                 <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">strength</li>
+                                                    <li class="list-group-item">dexterity</li>
+                                                    <li class="list-group-item">constitution</li>
+                                                    <li class="list-group-item">intelligence/</li>
+                                                    <li class="list-group-item">wisdom</li>
+                                                    <li class="list-group-item">charisma</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 py-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    helpers
+                                                </div>
+                                                <ul class="list-group list-group-flush"><li class="list-group-item">untrained</li>
+                                                    <li class="list-group-item">trained</li>
+                                                    <li class="list-group-item">expert</li>
+                                                    <li class="list-group-item">master</li>
+                                                    <li class="list-group-item">legendary</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 py-3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    save
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">fortitude</li>
+                                                    <li class="list-group-item">reflex</li>
+                                                    <li class="list-group-item">will</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -342,5 +399,6 @@
 </body>
 <script src="./js/bootstrap.js"></script>
 <script src="./js/jquery-3.7.1.slim.min.js"></script>
+<script src="./js/masonry.pkgd.min.js"></script>
 <script src="index.js"></script>
 </html>

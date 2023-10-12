@@ -244,7 +244,6 @@ $('#rollsList').on('click', '.editRoll', function() {
 });
 
 $('#rollsList').on('click', '.deleteRoll', function() {
-    //TO DO: ADD CONFIRMATION
     const item = $(this).closest('div.accordion-item')
     if (window.confirm("Are you sure you want to delete the roll " + item.find('.accordion-button').text() + "?")) {
         //Get the ID of this item and delete it from the roll List. 
@@ -266,5 +265,9 @@ $('button[data-bs-toggle="tab"]').on("click",function(){
     }
     else {
         $('#btnSubmitRoll').hide()
+        $('#attributesTables').masonry({
+            itemSelector: '.col-sm-6',
+            horizontalOrder: false
+        });
     }
  });
