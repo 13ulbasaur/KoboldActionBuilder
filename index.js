@@ -59,6 +59,13 @@ function addRoll() {
 
 //Wjen the roll modal opens...
 addRollModalElement.addEventListener('show.bs.modal', e => {
+    //Make it smol again
+    let modalDialog = $('#addRollModal .modal-dialog')
+    modalDialog.removeClass('modal-lg')
+    //Switch back to the roll tab. 
+    const bsTab = new bootstrap.Tab('#roll-tab')
+    bsTab.show();
+
     //If the event has a related target, that means that the edit button called the modal. 
     if (e.relatedTarget != null) {
         $("#roll-tab").text('Edit Roll');
@@ -259,15 +266,19 @@ $('#rollsList').on('click', '.deleteRoll', function() {
 
 //Hide the submit button in the roll modal if not on the roll tab 
 $('button[data-bs-toggle="tab"]').on("click",function(){
-    console.log(this.id);
+    let modalDialog = $('#addRollModal .modal-dialog')
     if (this.id === 'roll-tab') {
+        modalDialog.removeClass('modal-lg')
         $('#btnSubmitRoll').show()
     }
     else {
+        modalDialog.addClass('modal-lg')
         $('#btnSubmitRoll').hide()
-        $('#attributesTables').masonry({
-            itemSelector: '.col-sm-6',
-            horizontalOrder: false
-        });
+        if (this.id === 'reference-tab') {
+            $('#attributesTables').masonry({
+                itemSelector: '.col-sm-6',
+                horizontalOrder: false
+            });
+        }
     }
  });
