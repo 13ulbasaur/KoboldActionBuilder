@@ -47,13 +47,15 @@
         z-index: 3;
     }
     .accordionButtons > .btn {
+        margin-left: 5px;
+    }
+    .roundBtn {
         width: 30px;
         height: 30px;
         padding: 0px;
         border-radius: 60px;
         font-size: 1rem;
         text-align: center;
-        margin-left: 5px;
     }
   .accordion-button:not(.collapsed) {
     background-color: #52525e ;
@@ -62,6 +64,10 @@
     }
     #attributesTables > * .card-header {
         font-weight:bold;
+    }
+
+    #copyResultsBtn:hover {
+        color: #ffffff ;
     }
 
 </style>
@@ -111,8 +117,8 @@
                         <label for="tags" class="col-form-label">Tags</label>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-md-3 col-form-label">Rolls:</label>
-                        <div class="col-md-9">
+                        <label class="col-auto col-form-label">Rolls:</label>
+                        <div class="col-auto">
                             <button type="button" id="btnAddRoll" class="btn btn-dark" name="btnAddRoll">Add Roll</button>
                         </div>
                     </div>
@@ -123,7 +129,11 @@
                 </form>
             </div>
             <div class="col-sm-6">
-                <h3>Result</h3>
+                <div>
+                    <button style="float:right; border:none !important;" id="copyResultsBtn" class="btn roundBtn" type="button"><i class="bi bi-clipboard"></i></button>
+                    <span style="float:right; display:none;" id="copiedResultsText" class="form-text">Copied</span>
+                    <h3>Result</h3>
+                </div>
                 <textarea onfocus="this.select()" class="form-control" id="result" name="result" rows="5" readonly>json goes here</textarea>
             </div>
         </div>
@@ -175,7 +185,7 @@
                                 <label for="roll" class="form-label"><span class="itemName">Roll</span> <span class="form-text">The dice rolled for the action or for damage on a regular success.</span></label>
                             </div>
                             <div class="form-floating mb-3 rollSections attack-skill-section">
-                                <input type="text" id="targetDC" class="form-control" list="targetDCOptions">
+                                <input type="text" id="targetDC" class="form-control" list="targetDCOptions" required>
                                 <datalist id="targetDCOptions">
                                     <option value="AC">
                                     <option value="Acrobatics">
@@ -394,7 +404,7 @@
   
 </body>
 <script src="./js/bootstrap.js"></script>
-<script src="./js/jquery-3.7.1.slim.min.js"></script>
+<script src="./js/jquery-3.7.1.min.js"></script>
 <script src="./js/masonry.pkgd.min.js"></script>
 <script src="index.js"></script>
 </html>

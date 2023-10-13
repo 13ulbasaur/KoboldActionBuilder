@@ -19,11 +19,10 @@ function buildJson() {
     jsonObject.actionCost = $('#actionCost').val();
     jsonObject.autoHeighten = $('#autoHeighten').is(":checked");
     
-    jsonObject.description = $('#description').val();
+    const description = $('#description').val();
+    jsonObject.description = (description != '' ? description : null);
     const baseLevel = $('#baseLevel').val();
-    if (baseLevel != '') {
-        jsonObject.baseLevel = parseInt(baseLevel);
-    }
+    jsonObject.baseLevel = (baseLevel != '' ? parseInt(baseLevel) : null);
     const tags = $('#tags').val();
     //Split string into array by commas
     jsonObject.tags = tags.split(',').map(function(item) {
@@ -193,9 +192,10 @@ $("#btnSubmitRoll").click(function() {
         }
         else 
         {
-            if ($(this).val() != '') {
-                rollObject[$(this).attr('id')] = $(this).val();
-                itemHTML += '<br><b>' + $(this).siblings('label:first').find('span.itemName').text() + ': </b>' + $(this).val();
+            const thisVal = $(this).val();
+            rollObject[$(this).attr('id')] = (thisVal != '' ? thisVal : null);
+            if (thisVal != '') {
+                itemHTML += '<br><b>' + $(this).siblings('label:first').find('span.itemName').text() + ': </b>' + thisVal;
             }
         }
     });
@@ -233,8 +233,8 @@ function addRollToList(rollObject,itemHTML) {
     '<h2 class="accordion-header">' +
         '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#' + itemID + '" aria-expanded="false" aria-controls="' + itemID + '">' + rollObject.name + '</button>' +
         '<div class="accordionButtons">' +
-            '<button class="btn btn-outline-light editRoll" type="button" title="Edit Roll"><i class="bi bi-pencil-square"></i></button>' +
-            '<button class="btn btn-outline-danger deleteRoll" type="button" title="Delete Roll"><i class="bi bi-trash"></i></button>' +
+            '<button class="btn btn-outline-light roundBtn editRoll" type="button" title="Edit Roll"><i class="bi bi-pencil-square"></i></button>' +
+            '<button class="btn btn-outline-danger roundBtn deleteRoll" type="button" title="Delete Roll"><i class="bi bi-trash"></i></button>' +
         '</div>' +
     '</h2>' +
     '<div id="' + itemID + '" class="accordion-collapse collapse " data-bs-parent="#rollsList">' +
@@ -281,4 +281,14 @@ $('button[data-bs-toggle="tab"]').on("click",function(){
             });
         }
     }
+ });
+
+ //Copy the results in the results box to clipboard.
+ $('#copyResultsBtn').on("click", function() {
+    navigator.clipboard.writeText($('#result').val());
+    const copiedText = $('#copiedResultsText');
+    copiedText.show();
+    setTimeout(function(){
+        copiedText.fadeOut("slow");
+    }, 1000);
  });
